@@ -1,9 +1,16 @@
 import React from 'react';
+import MainItem from './MainItem';
+import MainStatus from './MainStatus';
 
 export default class TodoMain extends React.Component{
     render(){
         return(
-            <div className="todo-main">todo-main</div>
+            <div className="todo-main">
+                <ul>
+                    <MainItem />
+                </ul>
+                <MainStatus/>
+            </div>
         )
     }
 }

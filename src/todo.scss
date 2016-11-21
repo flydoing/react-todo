@@ -5,10 +5,14 @@ body{
   .todo-cont{
     margin:15px auto;
     .todo-search{
-      color: red;
+      input{
+        padding: 5px 8px;
+        font-size: 18px;
+        color: green;
+      }
     }
     .todo-main{
-      color: yellow;
+      color: red;
     }
     .todo-add{
       color: green;
