@@ -1,0 +1,17 @@
+body{
+  margin:0;
+  padding:0;
+  background: rgba(251, 248, 255, 0.18);
+  .todo-cont{
+    margin:15px auto;
+    .todo-search{
+      color: red;
+    }
+    .todo-main{
+      color: yellow;
+    }
+    .todo-add{
+      color: green;
+    }
+  }
+}
