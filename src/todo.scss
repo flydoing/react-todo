@@ -42,7 +42,7 @@ body{
         display: inline-block;
         text-align: center;
         width:26px;
-        width:20%;
+        width:22%;
         height:26px;
         padding: 2px 5px;
         border: 1px solid #C7C7C7;
@@ -64,9 +64,13 @@ body{
     }
     .todo-main{
       width:96%;
-      margin:0 3%;
-      padding:5px 0;
+      margin:0 2%;
       background: #f9f9f9;
+      ul{
+        margin-bottom: 10px;
+        border-top: 1px solid #8dc4e8;
+        border-bottom: 1px solid #8dc4e8;
+      }
       li{
         overflow: hidden;
         margin:0 8px;
@@ -102,26 +106,30 @@ body{
       .main-status{
         position: relative;
         overflow: hidden;
-        margin:10px 8px;
+        margin-top:5px;
+        padding:10px 8px;
+        background: #eadefe;
         vertical-align: middle;
         p{
           overflow: hidden;
           vertical-align: middle;
+          a{vertical-align: middle;}
           span{
             display: inline-block;
             margin:0 3px;
-            //vertical-align: middle;
+            color: #ff4426;
           }
           button{
             float: right;
             padding:4px 6px;
             vertical-align: middle;
+            cursor: pointer;
             border-radius: 4px;
             color: #fff;
             border: 1px solid transparent;
             outline: none;
-            background-color: #f0ad4e;
-            border-color: #eea236;
+            background-color: #5cb85c;
+            border-color: #4cae4c;
           }
         }
       }

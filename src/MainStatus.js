@@ -6,7 +6,7 @@ export default class MainItem extends React.Component{
         return(
             <div className="main-status">
                 <p>
-                    共<span>5</span>条，已完成<span>3条</span>，未完成<span>2</span>条
+                    <a>共<span>5</span>条，已完成<span>3</span>条，未完成<span>2</span>条</a>
                     <button>删除全部已完成</button>
                 </p>
             </div>
