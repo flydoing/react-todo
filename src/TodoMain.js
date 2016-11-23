@@ -8,6 +8,8 @@ export default class TodoMain extends React.Component{
             <div className="todo-main">
                 <ul>
                     <MainItem />
+                    <MainItem />
+                    <MainItem />
                 </ul>
                 <MainStatus/>
             </div>
