@@ -7,9 +7,13 @@ export default class TodoMain extends React.Component{
         return(
             <div className="todo-main">
                 <ul>
-                    <MainItem />
-                    <MainItem />
-                    <MainItem />
+                    {/*<MainItem />*/}
+                    {/*<MainItem />*/}
+                    {/*<MainItem />*/}
+                    {this.props.tasks.map((tasks,index) => {
+                        return <MainItem key={index} {...tasks} index={index} {...this.props}/>
+                    })}
+                    {/*回调数组：tasks:当前数组；index:当前索引*/}
                 </ul>
                 <MainStatus/>
             </div>
