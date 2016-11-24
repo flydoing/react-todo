@@ -1,11 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import todoDb from './todoDb.js';
 
 import TodoSearch from './TodoSearch.js';
 import TodoMain from './TodoMain.js';
 import TodoAdd from './TodoAdd.js';
-
-import todoDb from './todoDb.js';
 
 import './todo.scss';
 
@@ -15,7 +14,7 @@ class Todo extends React.Component{
         this.testDb = [{'task':'任务1','isDone':true},{'task':'任务2','isDone':false}];
         // this.todoDb = new todoDb('todoDb',this.testDb);
         this.todoDb = new todoDb('todoDb'); //初始化实例，localStorage命名为todoDb
-        // console.log(this.todoDb.get());
+        // console.log(this.todoDb.get().length);
         // if(this.todoDb.get()){
         //     this.todoDb.set([{'task':'默认的任务','isDone':false}]);
         // }

@@ -1,8 +1,8 @@
 export default class todoDb{
     constructor(name){
         this.name = name;
-        if(this.get(this.name).length <=0 ){
-            console.log(this.get(this.name).length);
+        if(JSON.stringify(this.get(this.name)) == '{}' ){
+            // console.log(this.get(this.name).length);
             this.set([{'task':'默认的任务','isDone':false}]);
         }
     }
