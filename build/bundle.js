@@ -126,13 +126,26 @@
 	            });
 	        }
 	    }, {
+	        key: 'deleteTask',
+	        value: function deleteTask(index) {
+	            console.log('deleteTask!');
+	            console.log(index);
+	            this.state.tasks.splice(index, 1); //改变dtate:数组首端插入新的task
+	            this.todoDb.set(this.state.tasks); //更新this.todoDb数据库
+	            console.log(this.todoDb.get());
+	            this.setState({
+	                tasks: this.state.tasks,
+	                isAllDone: false
+	            });
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
 	                'div',
 	                { className: 'todo-cont' },
 	                _react2.default.createElement(_TodoSearch2.default, null),
-	                _react2.default.createElement(_TodoMain2.default, { tasks: this.state.tasks }),
+	                _react2.default.createElement(_TodoMain2.default, { tasks: this.state.tasks, deleteTask: this.deleteTask.bind(this) }),
 	                _react2.default.createElement(_TodoAdd2.default, { addTask: this.addTask.bind(this) }),
 	                _react2.default.createElement(
 	                    'p',
@@ -21769,6 +21782,13 @@
 	    }
 
 	    _createClass(MainItem, [{
+	        key: 'deleteClick',
+	        value: function deleteClick() {
+	            console.log('deleteClick');
+	            // console.log(this.props.index);
+	            this.props.deleteTask(this.props.index);
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            var isDoneClass = this.props.isDone ? 'li-status' : 'li-status li-status-no'; //已/未完成的样式
@@ -21785,7 +21805,7 @@
 	                ),
 	                _react2.default.createElement(
 	                    'button',
-	                    { className: 'li-delete' },
+	                    { className: 'li-delete', onClick: this.deleteClick.bind(this) },
 	                    '\u5220\u9664'
 	                ),
 	                _react2.default.createElement(
