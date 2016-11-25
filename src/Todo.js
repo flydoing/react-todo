@@ -19,7 +19,7 @@ class Todo extends React.Component{
         //     this.todoDb.set([{'task':'默认的任务','isDone':false}]);
         // }
         this.state = {
-            tasks: this.todoDb.get(),    //array里面的obj
+            tasks: this.todoDb.get() || [],    //array里面的obj
             isAllDone: false
         };
         // this.todoDb.set(this.testDb);
@@ -35,6 +35,12 @@ class Todo extends React.Component{
         this.state.tasks.unshift(newTask);  //改变dtate:数组首端插入新的task
         this.todoDb.set(this.state.tasks);  //更新this.todoDb数据库
         console.log(this.todoDb.get());
+        this.setState(
+            {
+                tasks: this.state.tasks,
+                isAllDone: false
+            }
+        );
     }
     render(){
         return (
