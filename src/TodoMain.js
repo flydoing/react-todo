@@ -4,6 +4,7 @@ import MainStatus from './MainStatus';
 
 export default class TodoMain extends React.Component{
     render(){
+        console.log(this.props);
         // console.log(this.props.tasks);
         if(this.props.tasks.length <= 0){
             return(
@@ -26,7 +27,7 @@ export default class TodoMain extends React.Component{
                         })}
                         {/*回调数组：tasks:当前数组；index:当前索引*/}
                     </ul>
-                    <MainStatus deleteDone={this.props.deleteDone.bind(this)}/>
+                    <MainStatus deleteDone={this.props.deleteDone.bind(this)} {...this.props}/>
                 </div>
             )
         }

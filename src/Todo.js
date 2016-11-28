@@ -80,10 +80,14 @@ class Todo extends React.Component{
         );
     }
     render(){
+        var count = {
+            countAll: this.state.tasks.length || 0,
+            countDone: (this.state.tasks && this.state.tasks.filter((task) => task.isDone)).length || 0
+        }
         return (
             <div className="todo-cont">
                 <TodoSearch/>
-                <TodoMain tasks={this.state.tasks} deleteTask={this.deleteTask.bind(this)} changeDone={this.changeDone.bind(this)} deleteDone={this.deleteDone.bind(this)}/>
+                <TodoMain tasks={this.state.tasks} deleteTask={this.deleteTask.bind(this)} changeDone={this.changeDone.bind(this)} deleteDone={this.deleteDone.bind(this)} {...count}/>
                 <TodoAdd addTask={this.addTask.bind(this)}/>
                 <p><a href="javascript:;" onClick={this.test.bind(this)}>1测试localDb</a></p>
             </div>
