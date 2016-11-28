@@ -45,9 +45,20 @@ class Todo extends React.Component{
     deleteTask(index){
         console.log('deleteTask!');
         console.log(index);
-        this.state.tasks.splice(index, 1);  //改变dtate:数组首端插入新的task
+        this.state.tasks.splice(index, 1);  //改变dtate:数组删除指定index的一条task
         this.todoDb.set(this.state.tasks);  //更新this.todoDb数据库
         console.log(this.todoDb.get());
+        this.setState(
+            {
+                tasks: this.state.tasks,
+                isAllDone: false
+            }
+        );
+    }
+    changeDone(index,isDone){
+        console.log('changeDone');
+        this.state.tasks[index].isDone = isDone;
+        this.todoDb.set(this.state.tasks);  //更新this.todoDb数据库
         this.setState(
             {
                 tasks: this.state.tasks,
@@ -59,7 +70,7 @@ class Todo extends React.Component{
         return (
             <div className="todo-cont">
                 <TodoSearch/>
-                <TodoMain tasks={this.state.tasks} deleteTask={this.deleteTask.bind(this)}/>
+                <TodoMain tasks={this.state.tasks} deleteTask={this.deleteTask.bind(this)} changeDone={this.changeDone.bind(this)}/>
                 <TodoAdd addTask={this.addTask.bind(this)}/>
                 <p><a href="javascript:;" onClick={this.test.bind(this)}>1测试localDb</a></p>
             </div>
