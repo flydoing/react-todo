@@ -130,9 +130,35 @@
 	        value: function deleteTask(index) {
 	            console.log('deleteTask!');
 	            console.log(index);
-	            this.state.tasks.splice(index, 1); //改变dtate:数组首端插入新的task
+	            this.state.tasks.splice(index, 1); //改变dtate:数组删除指定index的一条task
 	            this.todoDb.set(this.state.tasks); //更新this.todoDb数据库
 	            console.log(this.todoDb.get());
+	            this.setState({
+	                tasks: this.state.tasks,
+	                isAllDone: false
+	            });
+	        }
+	    }, {
+	        key: 'changeDone',
+	        value: function changeDone(index, isDone) {
+	            console.log('changeDone');
+	            this.state.tasks[index].isDone = isDone;
+	            this.todoDb.set(this.state.tasks); //更新this.todoDb数据库
+	            this.setState({
+	                tasks: this.state.tasks,
+	                isAllDone: false
+	            });
+	        }
+	    }, {
+	        key: 'deleteDone',
+	        value: function deleteDone() {
+	            console.log('deleteDone');
+	            var tasks = this.state.tasks.filter(function (task) {
+	                return !task.isDone;
+	            }); //筛选出未完成的，去掉已完成的
+	            // console.log(tasks);
+	            this.state.tasks = tasks;
+	            this.todoDb.set(this.state.tasks); //更新this.todoDb数据库
 	            this.setState({
 	                tasks: this.state.tasks,
 	                isAllDone: false
@@ -145,7 +171,7 @@
 	                'div',
 	                { className: 'todo-cont' },
 	                _react2.default.createElement(_TodoSearch2.default, null),
-	                _react2.default.createElement(_TodoMain2.default, { tasks: this.state.tasks, deleteTask: this.deleteTask.bind(this) }),
+	                _react2.default.createElement(_TodoMain2.default, { tasks: this.state.tasks, deleteTask: this.deleteTask.bind(this), changeDone: this.changeDone.bind(this), deleteDone: this.deleteDone.bind(this) }),
 	                _react2.default.createElement(_TodoAdd2.default, { addTask: this.addTask.bind(this) }),
 	                _react2.default.createElement(
 	                    'p',
@@ -21706,8 +21732,9 @@
 	        value: function render() {
 	            var _this2 = this;
 
-	            console.log(this.props.tasks);
-	            if (this.props.tasks.length <= 0) {
+	            if (
+	            // console.log(this.props.tasks);
+	            this.props.tasks.length <= 0) {
 	                return _react2.default.createElement(
 	                    'div',
 	                    { className: 'todo-main' },
@@ -21733,7 +21760,7 @@
 	                            return _react2.default.createElement(_MainItem2.default, _extends({ key: index }, tasks, { index: index }, _this2.props));
 	                        })
 	                    ),
-	                    _react2.default.createElement(_MainStatus2.default, null)
+	                    _react2.default.createElement(_MainStatus2.default, { deleteDone: this.props.deleteDone.bind(this) })
 	                );
 	            }
 	        }
@@ -21789,6 +21816,16 @@
 	            this.props.deleteTask(this.props.index);
 	        }
 	    }, {
+	        key: 'changeClick',
+	        value: function changeClick() {
+	            console.log('changeClick');
+	            // console.log(this.props.index);
+	            // console.log(this.props.isDone);
+	            var isDone = !this.props.isDone;
+	            // console.log(isDone);
+	            this.props.changeDone(this.props.index, isDone);
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            var isDoneClass = this.props.isDone ? 'li-status' : 'li-status li-status-no'; //已/未完成的样式
@@ -21810,7 +21847,7 @@
 	                ),
 	                _react2.default.createElement(
 	                    'button',
-	                    { className: isDoneClass },
+	                    { className: isDoneClass, onClick: this.changeClick.bind(this) },
 	                    isDoneTxt
 	                )
 	            );
@@ -21860,6 +21897,12 @@
 	    }
 
 	    _createClass(MainItem, [{
+	        key: 'deleteDoneClick',
+	        value: function deleteDoneClick() {
+	            console.log('deleteDoneClick');
+	            this.props.deleteDone();
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
@@ -21893,7 +21936,7 @@
 	                    ),
 	                    _react2.default.createElement(
 	                        'button',
-	                        null,
+	                        { onClick: this.deleteDoneClick.bind(this) },
 	                        '\u5220\u9664\u5168\u90E8\u5DF2\u5B8C\u6210'
 	                    )
 	                )
@@ -21965,7 +22008,7 @@
 	            if (!task) return false;
 	            var newTask = {
 	                task: task,
-	                'isDone': false
+	                isDone: false
 	            };
 	            this.props.addTask(newTask);
 	            _reactDom2.default.findDOMNode(this.refs.inputTask).value = '';

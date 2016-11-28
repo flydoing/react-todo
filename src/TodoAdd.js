@@ -18,7 +18,7 @@ export default class TodoAdd extends React.Component{
         if(!task) return false;
         let newTask = {
             task: task,
-            'isDone': false
+            isDone: false
         }
         this.props.addTask(newTask);
         ReactDOM.findDOMNode(this.refs.inputTask).value = '';
