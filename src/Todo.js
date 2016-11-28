@@ -68,7 +68,8 @@ class Todo extends React.Component{
     }
     deleteDone(){
         console.log('deleteDone');
-        let tasks = this.state.tasks.filter(task => !task.isDone);  //筛选出未完成的，去掉已完成的
+        // let tasks = this.state.tasks.filter(task => !task.isDone);  //筛选出未完成的，去掉已完成的
+        let tasks = this.todoDb.get().filter(task => !task.isDone);  //筛选出未完成的，去掉已完成的
         // console.log(tasks);
         this.state.tasks = tasks;
         this.todoDb.set(this.state.tasks);  //更新this.todoDb数据库
@@ -79,6 +80,20 @@ class Todo extends React.Component{
             }
         );
     }
+    searchTasks(val){
+        console.log('searchTasks');
+        //从数据库去除完整的数据
+        let searchResult = this.todoDb.get().filter((task) => task.task.includes(val));
+        // console.log(searchResult);
+        this.state.tasks = searchResult;
+        this.setState(
+            {
+                tasks: this.state.tasks,
+                isAllDone: false
+            }
+        );
+
+    }
     render(){
         var count = {
             countAll: this.state.tasks.length || 0,
@@ -86,7 +101,7 @@ class Todo extends React.Component{
         }
         return (
             <div className="todo-cont">
-                <TodoSearch/>
+                <TodoSearch searchTasks={this.searchTasks.bind(this)}/>
                 <TodoMain tasks={this.state.tasks} deleteTask={this.deleteTask.bind(this)} changeDone={this.changeDone.bind(this)} deleteDone={this.deleteDone.bind(this)} {...count}/>
                 <TodoAdd addTask={this.addTask.bind(this)}/>
                 <p><a href="javascript:;" onClick={this.test.bind(this)}>1测试localDb</a></p>

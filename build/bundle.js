@@ -46,6 +46,8 @@
 
 	'use strict';
 
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _react = __webpack_require__(1);
@@ -153,7 +155,8 @@
 	        key: 'deleteDone',
 	        value: function deleteDone() {
 	            console.log('deleteDone');
-	            var tasks = this.state.tasks.filter(function (task) {
+	            // let tasks = this.state.tasks.filter(task => !task.isDone);  //筛选出未完成的，去掉已完成的
+	            var tasks = this.todoDb.get().filter(function (task) {
 	                return !task.isDone;
 	            }); //筛选出未完成的，去掉已完成的
 	            // console.log(tasks);
@@ -165,13 +168,34 @@
 	            });
 	        }
 	    }, {
+	        key: 'searchTasks',
+	        value: function searchTasks(val) {
+	            console.log('searchTasks');
+	            //从数据库去除完整的数据
+	            var searchResult = this.todoDb.get().filter(function (task) {
+	                return task.task.includes(val);
+	            });
+	            // console.log(searchResult);
+	            this.state.tasks = searchResult;
+	            this.setState({
+	                tasks: this.state.tasks,
+	                isAllDone: false
+	            });
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
+	            var count = {
+	                countAll: this.state.tasks.length || 0,
+	                countDone: (this.state.tasks && this.state.tasks.filter(function (task) {
+	                    return task.isDone;
+	                })).length || 0
+	            };
 	            return _react2.default.createElement(
 	                'div',
 	                { className: 'todo-cont' },
-	                _react2.default.createElement(_TodoSearch2.default, null),
-	                _react2.default.createElement(_TodoMain2.default, { tasks: this.state.tasks, deleteTask: this.deleteTask.bind(this), changeDone: this.changeDone.bind(this), deleteDone: this.deleteDone.bind(this) }),
+	                _react2.default.createElement(_TodoSearch2.default, { searchTasks: this.searchTasks.bind(this) }),
+	                _react2.default.createElement(_TodoMain2.default, _extends({ tasks: this.state.tasks, deleteTask: this.deleteTask.bind(this), changeDone: this.changeDone.bind(this), deleteDone: this.deleteDone.bind(this) }, count)),
 	                _react2.default.createElement(_TodoAdd2.default, { addTask: this.addTask.bind(this) }),
 	                _react2.default.createElement(
 	                    'p',
@@ -21636,6 +21660,10 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _reactDom = __webpack_require__(32);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
 	var _todoSearch = __webpack_require__(180);
 
 	var _todoSearch2 = _interopRequireDefault(_todoSearch);
@@ -21658,15 +21686,34 @@
 	    }
 
 	    _createClass(TodoSearch, [{
+	        key: 'searchClick',
+	        value: function searchClick() {
+	            this.searchUp();
+	        }
+	    }, {
+	        key: 'searchUp',
+	        value: function searchUp() {
+	            // if(event.keyCode === 13){
+	            //     console.log('searchUp');
+	            //     let val = ReactDOM.findDOMNode(this.refs.inputSearch).value;
+	            //     console.log(val);
+	            //     this.props.searchTasks(val);
+	            // }
+	            console.log('searchUp');
+	            var val = _reactDom2.default.findDOMNode(this.refs.inputSearch).value;
+	            console.log(val);
+	            this.props.searchTasks(val);
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
 	                'div',
 	                { className: 'todo-search' },
-	                _react2.default.createElement('input', { type: 'text', placeholder: '\u8F93\u5165\u8981\u67E5\u8BE2\u4EFB\u52A1\uFF0C\u70B9\u51FB\u6216enter\u952E\u641C\u7D22' }),
+	                _react2.default.createElement('input', { type: 'text', ref: 'inputSearch', onKeyUp: this.searchUp.bind(this), placeholder: '\u8F93\u5165\u8981\u67E5\u8BE2\u4EFB\u52A1\uFF0C\u70B9\u51FB\u6216enter\u952E\u641C\u7D22' }),
 	                _react2.default.createElement(
 	                    'a',
-	                    { href: 'javascript:;' },
+	                    { href: 'javascript:;', onClick: this.searchClick.bind(this) },
 	                    _react2.default.createElement('img', { src: _todoSearch2.default })
 	                )
 	            );
@@ -21732,9 +21779,9 @@
 	        value: function render() {
 	            var _this2 = this;
 
-	            if (
+	            console.log(this.props);
 	            // console.log(this.props.tasks);
-	            this.props.tasks.length <= 0) {
+	            if (this.props.tasks.length <= 0) {
 	                return _react2.default.createElement(
 	                    'div',
 	                    { className: 'todo-main' },
@@ -21760,7 +21807,7 @@
 	                            return _react2.default.createElement(_MainItem2.default, _extends({ key: index }, tasks, { index: index }, _this2.props));
 	                        })
 	                    ),
-	                    _react2.default.createElement(_MainStatus2.default, { deleteDone: this.props.deleteDone.bind(this) })
+	                    _react2.default.createElement(_MainStatus2.default, _extends({ deleteDone: this.props.deleteDone.bind(this) }, this.props))
 	                );
 	            }
 	        }
@@ -21905,6 +21952,7 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
+	            var countNotDone = this.props.countAll - this.props.countDone;
 	            return _react2.default.createElement(
 	                'div',
 	                { className: 'main-status' },
@@ -21918,19 +21966,19 @@
 	                        _react2.default.createElement(
 	                            'span',
 	                            null,
-	                            '5'
+	                            this.props.countAll
 	                        ),
 	                        '\u6761\uFF0C\u5DF2\u5B8C\u6210',
 	                        _react2.default.createElement(
 	                            'span',
 	                            null,
-	                            '3'
+	                            this.props.countDone
 	                        ),
 	                        '\u6761\uFF0C\u672A\u5B8C\u6210',
 	                        _react2.default.createElement(
 	                            'span',
 	                            null,
-	                            '2'
+	                            countNotDone
 	                        ),
 	                        '\u6761'
 	                    ),
