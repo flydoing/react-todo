@@ -5,6 +5,7 @@ module.exports = {
         path: path.resolve(__dirname,'build'),
         filename: 'bundle.js'
     },
+    devtool: 'eval-source-map',
     module: {
         loaders: [
             {
