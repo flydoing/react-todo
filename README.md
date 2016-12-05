@@ -28,6 +28,8 @@ package.json 安装：`npm install`
 (含自动刷新、热加载)
 
 ## react-todo 开发学习总结
+blog里面总结了开发过程的一些收货：
+
 [react-todo实战(一)之webpack](http://gjincai.github.io/2016/11/25/react-todo%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%80%EF%BC%89%E4%B9%8Bwebpack/)
 
 ## 学习参考
