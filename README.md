@@ -6,7 +6,7 @@ demo 效果图：
 ![](http://ohe5avf3y.bkt.clouddn.com/blog/201612/jam-blog-react-todo-show-20161205.png)
 
 demo 演示地址：
-[react-todo 链接](http://ohe5avf3y.bkt.clouddn.com/index_20161129.html)
+[react-todo 链接](http://ohe5avf3y.bkt.clouddn.com/pro/react/react-todo/index.html)
 
 ## react-todo功能
 1. 新增任务：在下方输入新任务，按enter键/新增按钮，即可插入新任务
