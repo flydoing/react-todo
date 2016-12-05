@@ -11,30 +11,16 @@ import './todo.scss';
 class Todo extends React.Component{
     constructor(){
         super();
-        this.testDb = [{'task':'任务1','isDone':true},{'task':'任务2','isDone':false}];
-        // this.todoDb = new todoDb('todoDb',this.testDb);
+        // this.testDb = [{'task':'任务1','isDone':true},{'task':'任务2','isDone':false}];
         this.todoDb = new todoDb('todoDb'); //初始化实例，localStorage命名为todoDb
-        // console.log(this.todoDb.get().length);
-        // if(this.todoDb.get()){
-        //     this.todoDb.set([{'task':'默认的任务','isDone':false}]);
-        // }
         this.state = {
             tasks: this.todoDb.get() || [],    //array里面的obj
             isAllDone: false
         };
-        // this.todoDb.set(this.testDb);
-    }
-    test(){
-        console.log(this.todoDb);
-        // this.todoDb.set(this.testDb);
-        console.log(this.todoDb.get());
-        console.log(this.state);
     }
     addTask(newTask){
-        console.log('addTask!');
         this.state.tasks.unshift(newTask);  //改变dtate:数组首端插入新的task
         this.todoDb.set(this.state.tasks);  //更新this.todoDb数据库
-        console.log(this.todoDb.get());
         this.setState(
             {
                 tasks: this.state.tasks,
@@ -43,11 +29,8 @@ class Todo extends React.Component{
         );
     }
     deleteTask(index){
-        console.log('deleteTask!');
-        console.log(index);
         this.state.tasks.splice(index, 1);  //改变dtate:数组删除指定index的一条task
         this.todoDb.set(this.state.tasks);  //更新this.todoDb数据库
-        console.log(this.todoDb.get());
         this.setState(
             {
                 tasks: this.state.tasks,
@@ -56,7 +39,6 @@ class Todo extends React.Component{
         );
     }
     changeDone(index,isDone){
-        console.log('changeDone');
         this.state.tasks[index].isDone = isDone;
         this.todoDb.set(this.state.tasks);  //更新this.todoDb数据库
         this.setState(
@@ -67,10 +49,7 @@ class Todo extends React.Component{
         );
     }
     deleteDone(){
-        console.log('deleteDone');
-        // let tasks = this.state.tasks.filter(task => !task.isDone);  //筛选出未完成的，去掉已完成的
         let tasks = this.todoDb.get().filter(task => !task.isDone);  //筛选出未完成的，去掉已完成的
-        // console.log(tasks);
         this.state.tasks = tasks;
         this.todoDb.set(this.state.tasks);  //更新this.todoDb数据库
         this.setState(
@@ -81,10 +60,8 @@ class Todo extends React.Component{
         );
     }
     searchTasks(val){
-        console.log('searchTasks');
         //从数据库去除完整的数据
-        let searchResult = this.todoDb.get().filter((task) => task.task.includes(val));
-        // console.log(searchResult);
+        let searchResult = this.todoDb.get().filter((tasks) => tasks.task.includes(val));
         this.state.tasks = searchResult;
         this.setState(
             {
@@ -104,7 +81,6 @@ class Todo extends React.Component{
                 <TodoSearch searchTasks={this.searchTasks.bind(this)}/>
                 <TodoMain tasks={this.state.tasks} deleteTask={this.deleteTask.bind(this)} changeDone={this.changeDone.bind(this)} deleteDone={this.deleteDone.bind(this)} {...count}/>
                 <TodoAdd addTask={this.addTask.bind(this)}/>
-                <p><a href="javascript:;" onClick={this.test.bind(this)}>1测试localDb</a></p>
             </div>
         )
     }

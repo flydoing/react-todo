@@ -1,9 +1,7 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 export default class MainItem extends React.Component{
     deleteDoneClick(){
-        console.log('deleteDoneClick');
         this.props.deleteDone();
     }
     render(){

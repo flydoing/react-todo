@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 
 export default class TodoAdd extends React.Component{
     addClick(){
-        console.log('addClick');
         this.addOne();
     }
     addEnter(event){
@@ -14,7 +13,6 @@ export default class TodoAdd extends React.Component{
     }
     addOne(){
         let task = ReactDOM.findDOMNode(this.refs.inputTask).value;
-        console.log(task);
         if(!task) return false;
         let newTask = {
             task: task,
@@ -27,7 +25,7 @@ export default class TodoAdd extends React.Component{
     render(){
         return(
             <div className="todo-add">
-                <input ref='inputTask' onKeyUp={this.addEnter.bind(this)} type="text" placeholder="输入要新建的任务，点击或enter键新建"/>
+                <input ref='inputTask' onKeyUp={this.addEnter.bind(this)} type="text" placeholder="输入任务，enter键/新增"/>
                 <a href="javascript:;" onClick={this.addClick.bind(this)}>新增</a>
             </div>
         )

@@ -4,8 +4,6 @@ import MainStatus from './MainStatus';
 
 export default class TodoMain extends React.Component{
     render(){
-        console.log(this.props);
-        // console.log(this.props.tasks);
         if(this.props.tasks.length <= 0){
             return(
                 <div className="todo-main">
@@ -19,13 +17,10 @@ export default class TodoMain extends React.Component{
             return(
                 <div className="todo-main">
                     <ul>
-                        {/*<MainItem />*/}
-                        {/*<MainItem />*/}
-                        {/*<MainItem />*/}
                         {this.props.tasks.map((tasks,index) => {
                             return <MainItem key={index} {...tasks} index={index} {...this.props}/>
                         })}
-                        {/*回调数组：tasks:当前数组；index:当前索引*/}
+                        {/*回调数组：tasks:当前数组的一个元素；index:当前索引*/}
                     </ul>
                     <MainStatus deleteDone={this.props.deleteDone.bind(this)} {...this.props}/>
                 </div>

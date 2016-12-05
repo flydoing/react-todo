@@ -3,16 +3,10 @@ import ReactDOM from 'react-dom';
 
 export default class MainItem extends React.Component{
     deleteClick(){
-        console.log('deleteClick');
-        // console.log(this.props.index);
         this.props.deleteTask(this.props.index);
     }
     changeClick(){
-        console.log('changeClick');
-        // console.log(this.props.index);
-        // console.log(this.props.isDone);
         let isDone = !this.props.isDone;
-        // console.log(isDone);
         this.props.changeDone(this.props.index,isDone);
     }
     render(){
